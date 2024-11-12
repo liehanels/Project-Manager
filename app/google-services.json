@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "885327594565",
+    "firebase_url": "https://koa-project-manager-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "koa-project-manager",
+    "storage_bucket": "koa-project-manager.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885327594565:android:8a00117299175921e9cf2c",
+        "android_client_info": {
+          "package_name": "com.koa.projectmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "885327594565-7eiotcvrrnnnkuhk3of5bh4d08808iut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.koa.projectmanager",
+            "certificate_hash": "14421408c1551d9a38118568cbe01bceaef29ee2"
+          }
+        },
+        {
+          "client_id": "885327594565-p0unaj5542a9hsrucg59gjtk9j6na5hf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgZeVuXeEjl7I_k5dbZvrw53j7aCAS_Ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "885327594565-p0unaj5542a9hsrucg59gjtk9j6na5hf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

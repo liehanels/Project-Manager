@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Project Manager</string>
+    <string name="logoAltText">Image of a clock with an arrow going horizontally</string>
+    <string name="login">Login</string>
+    <string name="google_sign_in_button">Google Sign In Button</string>
+    <string name="default_web_client_id">885327594565-p0unaj5542a9hsrucg59gjtk9j6na5hf.apps.googleusercontent.com</string>
+    <string name="projectsTitle">Projects</string>
+    <string name="btnAddProject">Add a Project</string>
+    <string name="search_projects">Search Projects</string>
+    <string name="addProjectTitle">Add Project</string>
+    <string name="userEmailTitle">User email</string>
+    <string name="projectNameHint">Project Name</string>
+    <string name="confirm">Confirm</string>
+    <string name="clientEmailHint">Client Email</string>
+    <string name="dueDateTitle">Project Due Date (Optional)</string>
+    <string name="dueTimeTitle">Project Due Time (Optional)</string>
+    <string name="dateFormat">MM/DD/YYYY</string>
+    <string name="timeFormat">HH:MM</string>
 </resources>

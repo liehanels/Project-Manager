@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.koa.projectmanager"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.koa.projectmanager"

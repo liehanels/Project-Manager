@@ -71,7 +71,7 @@
         android:elevation="6dp"
         android:padding="16dp"
         android:text="@string/login"
-        android:textColor="@color/text"
+        android:textColor="@color/button_text"
         app:layout_constraintBottom_toTopOf="@+id/GoogleSignIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

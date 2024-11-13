@@ -5,17 +5,17 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectManager"
-        tools:targetApi="35"
-        android:name=".FirebaseAppCheck">
-        <meta-data
-            android:name="com.google.android.play.integrity.api_key"
-            android:value="AIzaSyCgZeVuXeEjl7I_k5dbZvrw53j7aCAS_Ck" />
+        tools:targetApi="35">
+        <activity
+            android:name=".ViewProjectActivity"
+            android:exported="false" />
         <activity
             android:name=".AddProjectActivity"
             android:exported="false" />

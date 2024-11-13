@@ -1,6 +1,8 @@
 package com.koa.projectmanager
 
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -8,8 +10,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.database
 import java.io.Serializable
@@ -80,4 +80,39 @@ data class Project(
     var dueDate: String? = "",
     var dueTime: String? = "",
     var timeSpent: String? = ""
-) : Serializable
+) : Parcelable {
+
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(projectName)
+        parcel.writeString(clientEmail)
+        parcel.writeString(startDate)
+        parcel.writeString(startTime)
+        parcel.writeString(dueDate)
+        parcel.writeString(dueTime)
+        parcel.writeString(timeSpent)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Project> {
+        override fun createFromParcel(parcel: Parcel): Project {
+            return Project(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Project?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
+import java.util.Date
 import java.util.Locale
 
 class ProjectAdapter(context: Context, projects: List<Project>) :ArrayAdapter<Project>(context, 0, projects) {
@@ -51,34 +52,58 @@ class ProjectAdapter(context: Context, projects: List<Project>) :ArrayAdapter<Pr
             val progressBar: ProgressBar = view.findViewById(R.id.progressBarTimeRemaining)
 
             try {
-                if (item.dueDate != null && item.dueDate!!.isNotBlank()) {
+                if (item.dueTime != null && item.dueTime!!.isNotBlank()) {
+                    Log.w("Time", "Time: ${item.dueTime}")
+
+                    val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.startTime)
+                    val dueTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.dueTime)
+                    val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())) // Use Date() directly
+
+                    val totalTime = ChronoUnit.MINUTES.between(
+                        startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime(),
+                        dueTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime()
+                    ).toFloat()
+
+                    val timeRemaining = ChronoUnit.MINUTES.between(
+                        currentTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime(),
+                        dueTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime()
+                    ).toFloat()
+
+                    val progress = if (totalTime > 0) {
+                        ((totalTime - timeRemaining) / totalTime * 100).toInt()
+                    } else {
+                        100
+                    }
+
+                    Log.w("Time Progress", "Progress: $progress")
+                    progressBar.progress = progress
+
+                } else if (item.dueDate != null && item.dueDate!!.isNotBlank()) {
+                    Log.w("Date", "Date: ${item.dueDate}")
+
                     val startDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse(item.startDate)
                     val dueDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse(item.dueDate)
                     val currentDate = LocalDate.now()
 
-                    val daysRemaining = ChronoUnit.DAYS.between(currentDate, dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
-
                     val totalDays = ChronoUnit.DAYS.between(
                         startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
                         dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                    )
-                    val progress = ((totalDays - daysRemaining) / totalDays.toFloat() * 100).toInt()
-                    progressBar.progress = progress
-                } else if (item.dueTime != null && item.dueTime!!.isNotBlank()) {
-                    val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.startTime)
-                    val dueTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.dueTime)
-                    val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(SimpleDateFormat("HH:mm", Locale.getDefault()).format(System.currentTimeMillis()))
+                    ).toFloat()
 
-                    val timeRemaining = dueTime.time - currentTime.time
+                    val daysRemaining = ChronoUnit.DAYS.between(
+                        currentDate,
+                        dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                    ).toFloat()
 
-                    val totalTime = ChronoUnit.MINUTES.between(
-                        startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
-                        dueTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-                    )
-                    val progress = ((totalTime - timeRemaining) / totalTime.toFloat() * 100).toInt()
+                    val progress = if (totalDays > 0) {
+                        ((totalDays - daysRemaining) / totalDays * 100).toInt()
+                    } else {
+                        100
+                    }
+                    Log.w("Date Progress", "Progress: $progress")
                     progressBar.progress = progress
-                }
-                else {
+
+                } else {
                     progressBar.visibility = View.GONE
                 }
             } catch (e: ParseException) {

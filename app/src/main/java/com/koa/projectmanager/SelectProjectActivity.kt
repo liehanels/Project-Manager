@@ -12,19 +12,22 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DiffUtil
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.database
 import com.koa.projectmanager.databinding.ActivitySelectProjectBinding
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit
+import java.util.Locale
 
 class ProjectAdapter(context: Context, projects: List<Project>) :ArrayAdapter<Project>(context, 0, projects) {
     private class ViewHolder(view: View) {
@@ -43,6 +46,47 @@ class ProjectAdapter(context: Context, projects: List<Project>) :ArrayAdapter<Pr
         }
         val item = getItem(position)
         viewHolder.projectName.text = item?.projectName ?: "Unavailable"
+
+        if (item != null) {
+            val progressBar: ProgressBar = view.findViewById(R.id.progressBarTimeRemaining)
+
+            try {
+                if (item.dueDate != null && item.dueDate!!.isNotBlank()) {
+                    val startDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse(item.startDate)
+                    val dueDate = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).parse(item.dueDate)
+                    val currentDate = LocalDate.now()
+
+                    val daysRemaining = ChronoUnit.DAYS.between(currentDate, dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+
+                    val totalDays = ChronoUnit.DAYS.between(
+                        startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                        dueDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                    )
+                    val progress = ((totalDays - daysRemaining) / totalDays.toFloat() * 100).toInt()
+                    progressBar.progress = progress
+                } else if (item.dueTime != null && item.dueTime!!.isNotBlank()) {
+                    val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.startTime)
+                    val dueTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.dueTime)
+                    val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(SimpleDateFormat("HH:mm", Locale.getDefault()).format(System.currentTimeMillis()))
+
+                    val timeRemaining = dueTime.time - currentTime.time
+
+                    val totalTime = ChronoUnit.MINUTES.between(
+                        startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(),
+                        dueTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    )
+                    val progress = ((totalTime - timeRemaining) / totalTime.toFloat() * 100).toInt()
+                    progressBar.progress = progress
+                }
+                else {
+                    progressBar.visibility = View.GONE
+                }
+            } catch (e: ParseException) {
+                Log.e("ProjectAdapter", "Error parsing date: ${e.message}")
+                progressBar.visibility = View.GONE
+            }
+        }
+
         return view
         }
     }

@@ -57,43 +57,13 @@
                     app:layout_constraintTop_toBottomOf="@id/tvClientEmail" />
 
                 <TextView
-                    android:id="@+id/tvStartDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Start Date"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDueDate" />
-
-                <ProgressBar
-                    android:id="@+id/progressBarTimeRemaining"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:max="100"
-                    android:progress="50"
-                    app:layout_constraintEnd_toStartOf="@id/tvEndDate"
-                    app:layout_constraintStart_toEndOf="@id/tvStartDate"
-                    app:layout_constraintTop_toBottomOf="@id/tvDueDate" />
-
-                <TextView
-                    android:id="@+id/tvEndDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="End Date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDueDate" />
-
-                <TextView
                     android:id="@+id/tvTimeWorked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Time Worked: 0 hours"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/progressBarTimeRemaining" />
+                    app:layout_constraintTop_toBottomOf="@id/tvDueDate" />
 
                 <Chronometer
                     android:id="@+id/chronometerTimeWorked"
@@ -111,6 +81,16 @@
                     android:layout_marginTop="8dp"
                     android:text="Start Timer"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chronometerTimeWorked" />
+
+                <Button
+                    android:id="@+id/btnEndTimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="End Timer"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toEndOf="@id/btnStartTimer"
                     app:layout_constraintTop_toBottomOf="@id/chronometerTimeWorked" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

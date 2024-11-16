@@ -203,6 +203,7 @@ class SelectProjectActivity : AppCompatActivity() {
             val intent = Intent(this, ViewProjectActivity::class.java)
             intent.putExtra("user", user)
             intent.putExtra("project", clickedItem)
+            intent.putExtra("user", user)
             startActivity(intent)
         }
     }

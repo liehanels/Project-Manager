@@ -10,6 +10,7 @@ import android.widget.Chronometer
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
@@ -77,10 +78,19 @@ class ViewProjectActivity : AppCompatActivity() {
             }
 
             btnDeleteProject.setOnClickListener {
-                deleteProject(user, project)
-                val intent = Intent(this, SelectProjectActivity::class.java)
-                intent.putExtra("user", user)
-                startActivity(intent)
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Confirm Delete")
+                builder.setMessage("Are you sure you want to delete this project?")
+                builder.setPositiveButton("Yes") { dialog, which ->
+                    deleteProject(user, project)
+                    val intent = Intent(this, SelectProjectActivity::class.java)
+                    intent.putExtra("user", user)
+                    startActivity(intent)
+                }
+                builder.setNegativeButton("No") { dialog, which ->
+                    // Do nothing
+                }
+                builder.show()
             }
         } else {
             Log.e("PROJECT", "No project found")

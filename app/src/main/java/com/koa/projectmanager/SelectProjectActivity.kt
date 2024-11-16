@@ -25,7 +25,10 @@ import com.koa.projectmanager.databinding.ActivitySelectProjectBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.Locale
@@ -50,9 +53,37 @@ class ProjectAdapter(context: Context, projects: List<Project>) :ArrayAdapter<Pr
 
         if (item != null) {
             val progressBar: ProgressBar = view.findViewById(R.id.progressBarTimeRemaining)
+            val now = LocalDateTime.now()
 
             try {
-                if (item.dueTime != null && item.dueTime!!.isNotBlank()) {
+                if (item.dueTime != null && item.dueTime!!.isNotBlank() && item.dueDate != null && item.dueDate!!.isNotBlank()) {
+                    Log.w("DateTime", "Time: ${item.dueTime} Date: ${item.dueDate}")
+
+                    // Parse due date and time
+                    val dueDateTime = LocalDateTime.of(
+                        LocalDate.parse(item.dueDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")),
+                        LocalTime.parse(item.dueTime, DateTimeFormatter.ofPattern("HH:mm"))
+                    )
+
+                    // Parse start date and time
+                    val startDateTime = LocalDateTime.of(
+                        LocalDate.parse(item.startDate, DateTimeFormatter.ofPattern("MM/dd/yyyy")),
+                        LocalTime.parse(item.startTime, DateTimeFormatter.ofPattern("HH:mm"))
+                    )
+
+                    val totalTime = ChronoUnit.MINUTES.between(startDateTime, dueDateTime).toFloat()
+                    val timeRemaining = ChronoUnit.MINUTES.between(now, dueDateTime).toFloat()
+
+                    val progress = if (totalTime > 0) {
+                        ((totalTime - timeRemaining) / totalTime * 100).toInt()
+                    } else {
+                        100
+                    }
+
+                    Log.w("DateTime Progress", "Progress: $progress")
+                    progressBar.progress = progress
+                }
+                else if (item.dueTime != null && item.dueTime!!.isNotBlank()) {
                     Log.w("Time", "Time: ${item.dueTime}")
 
                     val startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).parse(item.startTime)

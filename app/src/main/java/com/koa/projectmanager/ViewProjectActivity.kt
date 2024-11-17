@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.database
+import java.util.Locale
 
 class ViewProjectActivity : AppCompatActivity() {
 
@@ -140,8 +141,8 @@ class ViewProjectActivity : AppCompatActivity() {
         val totalMinutes = totalSeconds / 60
         val totalHours = totalMinutes / 60
 
-        tvTimeWorked.text = String.format(
-            "Time Worked: %dh %dm %ds",
+        tvTimeWorked.text = String.format(Locale.US,
+            "Time Worked: %02dh %02dm %02ds",
             totalHours,
             totalMinutes % 60,
             totalSeconds % 60

@@ -49,14 +49,22 @@
                     app:layout_constraintTop_toBottomOf="@id/tvProjectName" />
 
                 <TextView
-                    android:id="@+id/tvDueDate"
+                    android:id="@+id/tvDueDateValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Due Date: "
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text=""  app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvClientEmail" />
+
+                <TextView
+                    android:id="@+id/tvDueTimeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text=""  app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvDueDateValue" />
 
                 <TextView
                     android:id="@+id/tvTimeWorked"
@@ -65,7 +73,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Time Worked: 0 hours"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDueDate" />
+                    app:layout_constraintTop_toBottomOf="@id/tvDueTimeValue" />
 
                 <Chronometer
                     android:id="@+id/chronometerTimeWorked"

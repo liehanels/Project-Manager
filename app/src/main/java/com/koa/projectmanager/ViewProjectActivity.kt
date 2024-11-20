@@ -44,11 +44,13 @@ class ViewProjectActivity : AppCompatActivity() {
         if (project != null && user != null) {
             val tvProjectName = findViewById<TextView>(R.id.tvProjectName)
             val tvClientEmail = findViewById<TextView>(R.id.tvClientEmail)
-            val tvDueDate = findViewById<TextView>(R.id.tvDueDate)
+            val tvDueDate = findViewById<TextView>(R.id.tvDueDateValue)
+            val tvDueTime = findViewById<TextView>(R.id.tvDueTimeValue)
 
             tvProjectName.text = project.projectName
             tvClientEmail.text = project.clientEmail
             tvDueDate.text = "Due Date: ${project.dueDate}"
+            tvDueTime.text = "Due Time: ${project.dueTime}"
 
             chronometer = findViewById(R.id.chronometerTimeWorked)
             btnStartTimer = findViewById(R.id.btnStartTimer)
